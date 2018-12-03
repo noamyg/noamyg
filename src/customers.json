@@ -1,0 +1,32 @@
+[
+    {
+        "id": "1",
+        "name": "Union Bank",
+        "logo": "ubi.png"
+    },
+    {
+        "id": "2",
+        "name": "Essence Group",
+        "logo": "essence.png"
+    },
+    {
+        "id": "3",
+        "name": "One1",
+        "logo": "one1.png"
+    },
+    {
+        "id": "4",
+        "name": "Leumit Healthcare",
+        "logo": "leumit.png"
+    },
+    {
+        "id": "5",
+        "name": "Amitim",
+        "logo": "amitim.png"
+    },
+    {
+        "id": "6",
+        "name": "CAL",
+        "logo": "cal.png"
+    }
+]

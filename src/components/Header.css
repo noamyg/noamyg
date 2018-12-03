@@ -1,0 +1,82 @@
+
+div.header{
+    background-image: url('../assets/images/tubes.jpg');
+    /* Full height */
+    height: 100%; 
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  h1 {
+    font-family: 'SketchBlock';
+    font-weight: bold;
+    font-size: 3.5rem;
+    color: #EAF9F9;
+  }
+  h2 {
+    font-family: 'SketchBlock';
+    font-size: 2rem;
+    color: #EAF9F9;
+  }
+  h3 {
+    font-family: 'SketchBlock';
+    font-size: 1rem;
+    color: #EAF9F9
+  }
+  .social a {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    text-indent: -999em;
+    -webkit-transform: scale(0.5, 0.5);
+    transform: scale(0.5, 0.5);
+    background-position: center center;
+    background-repeat: no-repeat;
+    text-align: center;
+    border: 0;
+    -webkit-transition: all .2s ease-in-out; /* For Safari 3.1 to 6.0 */
+    transition: all .2s ease-in-out;
+  }
+  .linkedin {
+    background-image: url('../assets/images/icons/linkedin.png');
+  }
+  .facebook {
+    background-image: url('../assets/images/icons/facebook.png');
+  }
+  .github {
+    background-image: url('../assets/images/icons/github.png');
+  }
+  .email {
+    background-image: url('../assets/images/icons/email.png');
+  }
+  /* Add a black background color to the top navigation */
+.topnav {
+    width: 100%;
+    background-color: rgba(110, 110, 110, 0.6);
+    overflow: hidden;
+    position: fixed;
+    z-index: 1000;
+    opacity: 0.8;
+    white-space: nowrap;
+}
+/* Style the links inside the navigation bar */
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    font-weight: 4  00;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 13px;
+}
+/* Change the color of links on hover */
+.topnav a:hover {
+    text-decoration: underline;
+}
+/* Add a color to the active/current link */
+.topnav a.home {
+    font-family: 'SketchBlock';
+    background-color: #4CAF50;
+    color: white;
+}
