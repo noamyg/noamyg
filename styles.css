@@ -245,6 +245,15 @@ a { color: inherit; }
   .chapters { gap: 0; }
   .chapters a { padding: 0.5rem 0.6rem; font-size: 0.66rem; letter-spacing: 0.08em; }
   .chapter__title { font-size: clamp(2rem, 9vw, 3.4rem); max-width: 14ch; }
+  /* text sits over the film on phones: a soft local scrim + brighter secondary text keeps it at WCAG AA */
+  .chapter__copy > * { position: relative; }
+  .chapter__copy::before {
+    content: ""; position: absolute; z-index: 0; left: -1.25rem; right: -1.25rem; top: 52%; height: 78%; transform: translateY(-50%);
+    background: radial-gradient(ellipse 85% 55% at 50% 50%, rgb(10 10 11 / 0.9) 0%, rgb(10 10 11 / 0.78) 55%, rgb(10 10 11 / 0) 100%);
+    pointer-events: none;
+  }
+  .chapter__body, .heroalt { color: #c9cbcf; }
+  .chapter__body, .chapter__title, .heroalt { text-shadow: 0 1px 12px rgb(10 10 11 / 0.85); }
   .contact__grid { grid-template-columns: minmax(0, 1fr); }
   .job summary { grid-template-columns: minmax(0, 1fr) 2rem; gap: 0.35rem 1rem; }
   .job__years { grid-column: 1 / -1; }
