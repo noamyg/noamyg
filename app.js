@@ -45,6 +45,10 @@
     if (ready) { target = p * Math.max(0, duration - 0.05); seek(); }
   };
 
+  const setHeaderH = () => document.documentElement.style.setProperty("--header-h", `${Math.ceil(header.getBoundingClientRect().height)}px`);
+  setHeaderH();
+  window.addEventListener("resize", setHeaderH, { passive: true });
+
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll, { passive: true });
