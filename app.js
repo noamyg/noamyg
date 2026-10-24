@@ -4,7 +4,8 @@
   const bar = document.querySelector(".progress span");
   const header = document.querySelector(".header");
   const links = Array.from(document.querySelectorAll("[data-chapter-link]"));
-  const chapters = Array.from(document.querySelectorAll(".chapter"));
+  const targets = links.map((l) => document.querySelector(l.getAttribute("href")));
+  const contact = document.getElementById("contact");
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const saveData = !!(navigator.connection && navigator.connection.saveData);
 
@@ -34,10 +35,14 @@
     bar.style.transform = `scaleX(${p})`;
     let current = 0;
     const mid = window.innerHeight * 0.5;
-    chapters.forEach((c, i) => { if (c.getBoundingClientRect().top < mid) current = i; });
+    targets.forEach((t, i) => { if (t && t.getBoundingClientRect().top < mid) current = i; });
     const past = window.scrollY > journey.offsetTop + journey.offsetHeight - window.innerHeight;
     header.classList.toggle("is-solid", past);
-    if (window.scrollY > journey.offsetTop + journey.offsetHeight - mid) current = -1;
+    // between the journey and Experience, and from Contact on, no tab is active
+    const jEnd = journey.offsetTop + journey.offsetHeight - mid;
+    const xpTop = targets[3] ? targets[3].getBoundingClientRect().top : Infinity;
+    if (window.scrollY > jEnd && xpTop >= mid) current = -1;
+    if (contact.getBoundingClientRect().top < mid) current = -1;
     if (current !== active) {
       active = current;
       links.forEach((l, i) => (i === active ? l.setAttribute("aria-current", "step") : l.removeAttribute("aria-current")));
