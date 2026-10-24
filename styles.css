@@ -247,14 +247,14 @@ a { color: inherit; }
 @media (max-width: 860px) {
   .header { grid-template-columns: minmax(0, 1fr) auto; row-gap: 0; padding-top: calc(0.4rem + env(safe-area-inset-top, 0px)); padding-bottom: 0; }
   :root { --header-h: 124px; }
-  .chapters { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; overflow-x: auto; margin-inline: -0.8rem; }
+  .chapters { grid-column: 1 / -1; grid-row: 2; justify-content: center; overflow-x: auto; margin-inline: -0.8rem; }
   .stage__poster, .stage__video { object-position: 50% 50%; }
   .stage__shade { background: radial-gradient(ellipse 120% 60% at 30% 55%, rgb(10 10 11 / 0.82) 0%, rgb(10 10 11 / 0.55) 55%, rgb(10 10 11 / 0.25) 100%); }
   .chapter, .chapter--right { justify-content: flex-start; }
   .chapter__copy { width: 100%; justify-content: center; padding-block: 7.5rem 2rem; }
   .chapters { gap: 0; }
   .chapters a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.5rem; font-size: 0.64rem; letter-spacing: 0.04em; }
-  .chapters a[href="#intro"] { display: none; }
+  .chapters a[href="#stack"] { display: none; }
   .chapter__title { font-size: clamp(1.8rem, 8vw, 2.6rem); max-width: 14ch; }
   /* text sits over the film on phones: a soft local scrim + brighter secondary text keeps it at WCAG AA */
   .chapter__copy > * { position: relative; }
