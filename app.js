@@ -11,6 +11,8 @@
 
   let duration = 0;
   let target = 0;
+  let shown = 0;      // eased playhead, chases target every frame
+  let raf = 0;
   let ready = false;
   let seeking = false;
   let ticking = false;
@@ -24,10 +26,22 @@
 
   const seek = () => {
     if (!ready || seeking) return;
-    if (Math.abs(video.currentTime - target) < 1 / 40) return;
+    if (Math.abs(video.currentTime - shown) < 1 / 48) return;
     seeking = true;
-    video.currentTime = target;
+    video.currentTime = shown;
   };
+
+  // Ease the playhead toward the scroll position so wheel steps and flicks
+  // turn into continuous motion instead of jumps.
+  const tick = () => {
+    raf = 0;
+    if (!ready) return;
+    const diff = target - shown;
+    shown = Math.abs(diff) < 0.004 ? target : shown + diff * 0.18;
+    seek();
+    if (shown !== target) raf = requestAnimationFrame(tick);
+  };
+  const chase = () => { if (!raf) raf = requestAnimationFrame(tick); };
 
   const update = () => {
     ticking = false;
@@ -47,7 +61,7 @@
       active = current;
       links.forEach((l, i) => (i === active ? l.setAttribute("aria-current", "step") : l.removeAttribute("aria-current")));
     }
-    if (ready) { target = p * Math.max(0, duration - 0.05); seek(); }
+    if (ready) { target = p * Math.max(0, duration - 0.05); chase(); }
   };
 
   const setHeaderH = () => document.documentElement.style.setProperty("--header-h", `${Math.ceil(header.getBoundingClientRect().height)}px`);
@@ -55,6 +69,22 @@
   window.addEventListener("resize", setHeaderH, { passive: true });
 
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+
+  const finePointer = window.matchMedia("(pointer: fine)").matches;
+  if (!reduce && finePointer && window.Lenis) {
+    const lenis = new window.Lenis({ lerp: 0.09, wheelMultiplier: 0.9, autoRaf: true });
+    lenis.on("scroll", onScroll);
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      const el = document.querySelector(a.getAttribute("href"));
+      if (!el) return;
+      e.preventDefault();
+      // Lenis honours each target's scroll-margin-top, which already clears the header
+      lenis.scrollTo(el, { duration: 1.4 });
+      history.replaceState(null, "", a.getAttribute("href"));
+    });
+  }
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll, { passive: true });
 
@@ -75,6 +105,7 @@
     video.addEventListener("loadedmetadata", () => {
       duration = video.duration || 0;
       ready = true;
+      shown = progress() * Math.max(0, duration - 0.05);
       update();
     }, { once: true });
     video.preload = "auto";
