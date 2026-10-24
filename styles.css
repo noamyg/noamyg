@@ -95,7 +95,7 @@ a { color: inherit; }
 .chapter--right { justify-content: flex-end; }
 .chapter__kicker { margin: 0 0 1rem; color: var(--accent); font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; }
 .chapter__title {
-  max-width: 12ch; margin: 0; font-family: var(--display); font-stretch: 125%; font-weight: 800;
+  max-width: 15ch; margin: 0; font-family: var(--display); font-stretch: 125%; font-weight: 800;
   font-size: clamp(2.1rem, 3.6vw, 3.9rem); line-height: 0.98; letter-spacing: -0.03em; text-wrap: balance;
 }
 #intro .chapter__title { animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
