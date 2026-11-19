@@ -206,7 +206,11 @@
     const check = () => {
       const ctrl = new AbortController();
       const t = setTimeout(() => ctrl.abort(), 8000);
-      fetch(`${API}/v1/convai/agents/${AGENT}/widget`, { signal: ctrl.signal, credentials: "omit" })
+      // Site-side switch: a daily job flips askai.json off when credits run low.
+      fetch("/askai.json", { signal: ctrl.signal, cache: "no-cache" })
+        .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+        .then((flag) => (flag && flag.enabled === true ? null : Promise.reject("off")))
+        .then(() => fetch(`${API}/v1/convai/agents/${AGENT}/widget`, { signal: ctrl.signal, credentials: "omit" }))
         .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
         .then((j) => {
           clearTimeout(t);
