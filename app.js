@@ -145,5 +145,81 @@
     });
   });
 
+  // "Ask my AI": ElevenLabs agent. Nothing heavy loads until a visitor asks.
+  // The buttons only appear if the agent answers its config check, so an
+  // archived or disabled agent simply disappears from the site.
+  (() => {
+    const AGENT = "agent_6501m7s7sa0ee0xrgaae8wze4cha";
+    const API = "https://api.us.elevenlabs.io"; // same host the widget uses
+    const SRC = "https://unpkg.com/@elevenlabs/convai-widget-embed@0.24.1/dist/index.js";
+    const triggers = document.querySelectorAll("[data-askai]");
+    const note = document.querySelector("[data-askai-note]");
+    const pill = document.querySelector(".askpill");
+    if (!triggers.length || !("fetch" in window) || !("customElements" in window)) return;
+    let state = "idle"; // idle | loading | ready | off
+
+    const hideAll = () => {
+      state = "off";
+      triggers.forEach((b) => { b.hidden = true; });
+      if (note) note.hidden = true;
+      const w = document.querySelector("elevenlabs-convai");
+      if (w) w.remove();
+    };
+
+    const expand = () => document.dispatchEvent(new CustomEvent("elevenlabs-agent:expand", { detail: { action: "expand" } }));
+
+    const open = () => {
+      if (state === "ready") return expand();
+      if (state !== "idle") return;
+      state = "loading";
+      triggers.forEach((b) => b.setAttribute("aria-busy", "true"));
+      const el = document.createElement("elevenlabs-convai");
+      el.setAttribute("agent-id", AGENT);
+      document.body.appendChild(el);
+      const s = document.createElement("script");
+      s.src = SRC; s.async = true; s.crossOrigin = "anonymous";
+      const fail = setTimeout(hideAll, 12000);
+      s.onerror = () => { clearTimeout(fail); hideAll(); };
+      s.onload = () => {
+        customElements.whenDefined("elevenlabs-convai").then(() => {
+          // Wait until the widget has actually drawn itself before swapping launchers.
+          const t0 = Date.now();
+          const poll = () => {
+            const root = el.shadowRoot;
+            if (root && root.querySelector("button, [role='button'], input, textarea")) {
+              clearTimeout(fail);
+              state = "ready";
+              triggers.forEach((b) => b.removeAttribute("aria-busy"));
+              if (pill) pill.hidden = true; // the widget brings its own launcher
+              setTimeout(expand, 100);
+            } else if (Date.now() - t0 > 10000) {
+              clearTimeout(fail); hideAll();
+            } else setTimeout(poll, 150);
+          };
+          poll();
+        });
+      };
+      document.head.appendChild(s);
+    };
+    triggers.forEach((b) => b.addEventListener("click", open));
+
+    const check = () => {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 8000);
+      fetch(`${API}/v1/convai/agents/${AGENT}/widget`, { signal: ctrl.signal, credentials: "omit" })
+        .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+        .then((j) => {
+          clearTimeout(t);
+          if (!j || !j.widget_config || state === "off") return hideAll();
+          triggers.forEach((b) => { b.hidden = false; });
+          if (note) note.hidden = false;
+        })
+        .catch(() => { clearTimeout(t); hideAll(); });
+    };
+    const later = () => ("requestIdleCallback" in window ? requestIdleCallback(check, { timeout: 4000 }) : setTimeout(check, 1500));
+    if (document.readyState === "complete") later();
+    else window.addEventListener("load", later, { once: true });
+  })();
+
   update();
 })();
