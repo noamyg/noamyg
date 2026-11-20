@@ -9,11 +9,11 @@
   --bg-2: #1b1e1d;
   --bg-3: #232726;
   --bg-4: #2c3130;
-  --ink: #ededea;
-  --muted: #9c9ea3;
+  --ink: #e9eeec;
+  --muted: #9aa29f;
   --accent: #9ed8c3;
-  --line: rgb(237 237 234 / 0.12);
-  --ink-soft: #c9cbcf;
+  --line: rgb(233 238 236 / 0.12);
+  --ink-soft: #c7cecb;
   --on-accent-soft: #1d2b26;
   --display: "Mona Sans", "Helvetica Neue", Arial, sans-serif;
   --body: "Mona Sans", "Helvetica Neue", Arial, sans-serif;
@@ -352,7 +352,9 @@ a { color: inherit; }
 .contact__cta .contact__li:hover { color: var(--carbon); }
 
 /* ---- type details ---- */
-.chapter__title, .pipe__title, .xp__heading, .stack__title, .contact__title { font-weight: 800; font-stretch: 125%; }
+.chapter__title, .pipe__title, .xp__heading, .stack__title, .contact__title { font-weight: 760; font-stretch: 125%; }
+/* dark ground: light type reads heavier (irradiation), so trim weight; the mint band keeps full weight */
+.contact__title { font-weight: 800; }
 .chapters a { font-size: 0.86rem; font-stretch: 100%; }
 .navcta { font-size: 0.9rem; font-weight: 600; font-stretch: 105%; }
 .step h3 { font-stretch: 110%; font-weight: 650; font-size: 1.12rem; }
@@ -379,8 +381,11 @@ a { color: inherit; }
 .pipe-anim .steps::before, .pipe-anim .steps::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; }
 .pipe-anim .steps::before { background: var(--line); }
 .pipe-anim .steps::after { background: var(--accent); transform: scaleX(var(--p, 0)); transform-origin: left; }
-.pipe-anim .step { opacity: 0.32; transition: opacity 0.45s ease, background-color 0.45s ease, color 0.45s ease; }
-.pipe-anim .step.is-on { opacity: 1; }
+.pipe-anim .step { transition: background-color 0.45s ease, color 0.45s ease; }
+.pipe-anim .step img, .pipe-anim .step__num { transition: opacity 0.45s ease; }
+.pipe-anim .step:not(.is-on) img { opacity: 0.3; }
+.pipe-anim .step:not(.is-on) h3 { color: var(--muted); }
+.pipe-anim .step h3 { transition: color 0.45s ease; }
 .pipe-anim .step--gate::before { transform: rotate(45deg) scale(0.6); transition: transform 0.45s cubic-bezier(0.3, 1.6, 0.5, 1); }
 .pipe-anim .step--gate.is-on::before { transform: rotate(45deg) scale(1.25); }
 .step--gate { background: var(--accent); color: var(--carbon); padding-right: 1.1rem; }
@@ -400,7 +405,7 @@ a { color: inherit; }
 .job[open]::details-content { block-size: auto; }
 
 @media (prefers-reduced-motion: reduce) {
-  .pipe-anim .step { opacity: 1; transition: none; }
+  .pipe-anim .step, .pipe-anim .step h3, .pipe-anim .step img { transition: none; }
   .job::details-content { transition: none; }
 }
 
@@ -422,4 +427,20 @@ a { color: inherit; }
 .askgate__no:hover { border-color: var(--ink-soft); color: var(--ink); }
 @media (prefers-reduced-motion: no-preference) {
   .askgate[open] { animation: fadeup 0.25s cubic-bezier(0.2, 0.7, 0.2, 1); }
+}
+
+/* Increase contrast mode (macOS/iOS "Increase contrast", prefers-contrast: more) */
+@media (prefers-contrast: more) {
+  :root { --muted: var(--ink-soft); --ink-soft: var(--ink); --line: rgb(233 238 236 / 0.45); }
+  .chapter__body, .chapter__title, .heroalt { text-shadow: none; }
+  .stage__shade { background: rgb(10 11 11 / 0.82); }
+  .pipe-anim .step:not(.is-on) img { opacity: 1; }
+  .pipe-anim .step:not(.is-on) h3 { color: var(--ink); }
+  .header.is-solid { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  :focus-visible { outline-width: 3px; }
+}
+/* Windows contrast themes: let system colors win, keep outlines on controls */
+@media (forced-colors: active) {
+  .mailbtn, .askbtn, .askpill, .navcta, .copy, .askgate__go, .askgate__no, .step--gate, .cell { border: 1px solid CanvasText; }
+  .stage__shade { display: none; }
 }
