@@ -145,6 +145,28 @@
     });
   });
 
+  // Pipeline: a rail fills and each step lights up as the section scrolls past.
+  (() => {
+    const list = document.querySelector(".pipe .steps");
+    if (!list || reduce) return;
+    const steps = Array.from(list.children);
+    document.documentElement.classList.add("pipe-anim");
+    let queued = false;
+    const paint = () => {
+      queued = false;
+      const r = list.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.3)));
+      list.style.setProperty("--p", p.toFixed(3));
+      const lit = Math.floor(p * steps.length + 0.35);
+      steps.forEach((el, i) => el.classList.toggle("is-on", i < lit));
+    };
+    const ask = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+    window.addEventListener("scroll", ask, { passive: true });
+    window.addEventListener("resize", ask, { passive: true });
+    paint();
+  })();
+
   // "Ask my AI": ElevenLabs agent. Nothing heavy loads until a visitor asks.
   // The buttons only appear if the agent answers its config check, so an
   // archived or disabled agent simply disappears from the site.
