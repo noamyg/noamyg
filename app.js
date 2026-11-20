@@ -223,7 +223,24 @@
       };
       document.head.appendChild(s);
     };
-    triggers.forEach((b) => b.addEventListener("click", open));
+    // Show the privacy notice before anything loads from ElevenLabs.
+    const gate = document.getElementById("askgate");
+    const KEY = "askai-consent-v1";
+    const agreed = () => { try { return localStorage.getItem(KEY) === "yes"; } catch (e) { return false; } };
+    const ask = () => {
+      if (agreed() || !gate || typeof gate.showModal !== "function") return open();
+      gate.returnValue = "";
+      gate.showModal();
+    };
+    if (gate) {
+      gate.addEventListener("close", () => {
+        if (gate.returnValue !== "accept") return;
+        try { localStorage.setItem(KEY, "yes"); } catch (e) {}
+        open();
+      });
+      gate.addEventListener("click", (e) => { if (e.target === gate) gate.close("cancel"); });
+    }
+    triggers.forEach((b) => b.addEventListener("click", ask));
 
     const check = () => {
       const ctrl = new AbortController();

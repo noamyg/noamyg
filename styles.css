@@ -407,3 +407,19 @@ a { color: inherit; }
 /* gate cards keep their inner padding in every grid layout (beats the column-reset rules above) */
 .steps .step--gate { padding: 1.75rem 1.1rem 1.25rem; }
 @media (max-width: 600px) { .steps .step--gate::before { left: 1.1rem; } }
+
+/* Ask my AI: privacy notice shown before the chat loads */
+.askgate { width: min(30rem, calc(100vw - 2rem)); padding: 0; border: 1px solid var(--line); background: var(--bg-2); color: var(--ink); }
+.askgate::backdrop { background: rgb(5 6 6 / 0.72); backdrop-filter: blur(3px); }
+.askgate__box { padding: clamp(1.5rem, 4vw, 2rem); }
+.askgate__title { margin: 0 0 0.75rem; font-stretch: 112%; font-weight: 700; font-size: 1.35rem; line-height: 1.15; }
+.askgate__body { margin: 0; color: var(--ink-soft); line-height: 1.6; }
+.askgate__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+.askgate__go, .askgate__no { min-height: 44px; padding: 0 1.25rem; font: 600 0.98rem/1 var(--body); cursor: pointer; }
+.askgate__go { border: 1px solid var(--accent); background: var(--accent); color: var(--carbon); }
+.askgate__go:hover { background: #b3e2d1; }
+.askgate__no { border: 1px solid var(--line); background: transparent; color: var(--ink-soft); }
+.askgate__no:hover { border-color: var(--ink-soft); color: var(--ink); }
+@media (prefers-reduced-motion: no-preference) {
+  .askgate[open] { animation: fadeup 0.25s cubic-bezier(0.2, 0.7, 0.2, 1); }
+}
