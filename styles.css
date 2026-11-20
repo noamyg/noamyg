@@ -403,3 +403,7 @@ a { color: inherit; }
   .pipe-anim .step { opacity: 1; transition: none; }
   .job::details-content { transition: none; }
 }
+
+/* gate cards keep their inner padding in every grid layout (beats the column-reset rules above) */
+.steps .step--gate { padding: 1.75rem 1.1rem 1.25rem; }
+@media (max-width: 600px) { .steps .step--gate::before { left: 1.1rem; } }
