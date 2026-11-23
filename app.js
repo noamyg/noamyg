@@ -121,7 +121,7 @@
   window.addEventListener("touchstart", prime, { once: true, passive: true });
 
   if (!reduce && !saveData) {
-    const start = () => ("requestIdleCallback" in window ? requestIdleCallback(load, { timeout: 1500 }) : setTimeout(load, 300));
+    const start = () => ("requestIdleCallback" in window ? requestIdleCallback(load, { timeout: 300 }) : setTimeout(load, 300));
     if (document.readyState === "complete") start();
     else window.addEventListener("load", start, { once: true });
   }
