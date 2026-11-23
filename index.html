@@ -19,8 +19,8 @@
 <link rel="icon" type="image/svg+xml" href="/assets/brand/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/favicon-32.png">
 <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
-<link rel="preload" as="image" href="/assets/film/poster.webp" media="(min-width: 861px)">
-<link rel="preload" as="image" href="/assets/film/poster-mobile.webp" media="(max-width: 860px)">
+<link rel="preload" as="image" href="/assets/film/poster.webp?v=2" media="(min-width: 861px)">
+<link rel="preload" as="image" href="/assets/film/poster-mobile.webp?v=2" media="(max-width: 860px)">
 <link rel="preload" href="/assets/fonts/mona-sans-wdth.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css?v=20261120d">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Noam Gherson","jobTitle":"Tech Lead · AI-Focused Fullstack Engineer","url":"https://www.noamyg.com","sameAs":["https://www.linkedin.com/in/noamyg/","https://github.com/noamyg"],"address":{"@type":"PostalAddress","addressLocality":"Tel Mond","addressCountry":"IL"}}</script>
@@ -45,17 +45,17 @@
   <section class="journey" aria-label="Introduction">
     <div class="stage" aria-hidden="true">
       <picture>
-        <source media="(max-width: 860px)" srcset="/assets/film/poster-mobile.webp">
-        <img class="stage__poster" src="/assets/film/poster.webp" alt="" width="1280" height="720" fetchpriority="high">
+        <source media="(max-width: 860px)" srcset="/assets/film/poster-mobile.webp?v=2">
+        <img class="stage__poster" src="/assets/film/poster.webp?v=2" alt="" width="1280" height="720" fetchpriority="high">
       </picture>
-      <video class="stage__video" muted playsinline preload="none" data-src="/assets/film/film.mp4" data-src-mobile="/assets/film/film-mobile.mp4"></video>
+      <video class="stage__video" muted playsinline preload="none" data-src="/assets/film/film.mp4?v=2" data-src-mobile="/assets/film/film-mobile.mp4?v=2"></video>
       <div class="stage__shade"></div>
     </div>
 
     <div class="story">
       <article class="chapter" id="intro">
         <div class="chapter__copy">
-          <h1 class="chapter__title"><span class="ln"><span>Agents write.</span></span> <span class="ln"><span>Engineers decide.</span></span></h1>
+          <h1 class="chapter__title"><span class="ln"><span>From idea</span></span> <span class="ln"><span>to pull request.</span></span></h1>
           <p class="chapter__byline"><strong>Noam Gherson</strong> · Tech Lead · AI-Focused Fullstack Engineer</p>
           <p class="chapter__body">15+ years shipping software for banks, fintech and government. Now I build agentic delivery workflows.</p>
           <div class="chapter__actions">
@@ -67,7 +67,7 @@
 
       <article class="chapter" id="agentic">
         <div class="chapter__copy">
-          <h2 class="chapter__title">From ticket to pull request.</h2>
+          <h2 class="chapter__title">Agents write. Engineers decide.</h2>
           <p class="chapter__body">Speccing, planning and coding agents work inside the codebase a team already has. Human decision gates, AI code review and CI/CD check every change before it merges.</p>
           <ul class="chapter__tags">
             <li>Spec and planning agents</li>
@@ -116,7 +116,7 @@
       </ul>
     </div>
     <figure class="now__plate">
-      <img src="/assets/img/plate-seam.webp" alt="Macro of a machined aluminum edge meeting a glowing glass seam" width="880" height="1168" loading="lazy" decoding="async">
+      <img src="/assets/img/plate-gate.webp" alt="Fingers pinching a single glowing mint line of light" width="880" height="1168" loading="lazy" decoding="async">
     </figure>
   </section>
 
@@ -202,7 +202,7 @@
           <h4>Quality</h4>
           <ul><li>AI code review in CI</li><li>LLM evals and guardrails</li><li>RAG, vector search</li></ul>
         </div>
-        <figure class="cell cell--image"><img src="/assets/img/plate-grid.webp" alt="Machined aluminum blocks with glass inserts in a modular grid" width="1168" height="880" loading="lazy" decoding="async"></figure>
+        <figure class="cell cell--image"><img src="/assets/img/plate-merge.webp" alt="Dozens of faint light lines merging into one bright line" width="1168" height="880" loading="lazy" decoding="async"></figure>
         <div class="cell cell--c">
           <h3>Frontend</h3>
           <ul><li>Angular 7-19</li><li>Signals, RxJS</li><li>NgRx, SignalStore</li><li>TypeScript</li><li>NX</li><li>Storybook</li></ul>
